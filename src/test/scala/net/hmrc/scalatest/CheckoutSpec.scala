@@ -131,6 +131,13 @@ class CheckoutSpec extends mutable.Specification {
       val items = apples ++ oranges
       Checkout.checkout(items) mustEqual "£2.05"
     }
+
+    "Charge 20 apples and 16 orange with a readable output" in {
+      val apples: List[String] = List.fill(20)("Apple")
+      val oranges: List[String] = List.fill(16)("Orange")
+      val items = apples ++ oranges
+      Checkout.checkout(items) mustEqual "£8.75"
+    }
   }
 
   "Calculate discount" should {
@@ -140,13 +147,18 @@ class CheckoutSpec extends mutable.Specification {
     }
 
     "Be 60p for 2 apples" in {
-      val items: List[String] = List("Apple")
-      Checkout.calculateDiscount(items) mustEqual 0
+      val items: List[String] = List.fill(2)("Apple")
+      Checkout.calculateDiscount(items) mustEqual 60
     }
 
     "Be 60p for 3 apples" in {
-      val items: List[String] = List("Apple")
-      Checkout.calculateDiscount(items) mustEqual 0
+      val items: List[String] = List.fill(3)("Apple")
+      Checkout.calculateDiscount(items) mustEqual 60
+    }
+
+    "Be 120p for 5 apples" in {
+      val items: List[String] = List.fill(5)("Apple")
+      Checkout.calculateDiscount(items) mustEqual 120
     }
 
     "Be 0p for 1 orange" in {
@@ -157,6 +169,28 @@ class CheckoutSpec extends mutable.Specification {
     "Be 0p for 2 oranges" in {
       val items: List[String] = List.fill(2)("Orange")
       Checkout.calculateDiscount(items) mustEqual 0
+    }
+
+    "Be 25p for 4 oranges" in {
+      val items: List[String] = List.fill(4)("Orange")
+      Checkout.calculateDiscount(items) mustEqual 25
+    }
+
+    "Be 50p for 6 oranges" in {
+      val items: List[String] = List.fill(6)("Orange")
+      Checkout.calculateDiscount(items) mustEqual 50
+    }
+
+    "Be 75p for 10 oranges" in {
+      val items: List[String] = List.fill(10)("Orange")
+      Checkout.calculateDiscount(items) mustEqual 75
+    }
+
+    "Be 1070p for 14 oranges and 5 apples" in {
+      val oranges: List[String] = List.fill(14)("Orange")
+      val apples: List[String] = List.fill(5)("Apple")
+      val items: List[String] = oranges ++ apples
+      Checkout.calculateDiscount(items) mustEqual 220
     }
 
     "Be 1070p for 44 oranges and 25 apples" in {
