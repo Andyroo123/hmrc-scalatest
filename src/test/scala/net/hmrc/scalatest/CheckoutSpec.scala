@@ -23,6 +23,11 @@ class CheckoutSpec extends mutable.Specification {
       Checkout.addUpItems(items) mustEqual 120
     }
 
+    "Charge 3 apples at 180p" in {
+      val items: List[String] = List("Apple", "Apple", "Apple")
+      Checkout.addUpItems(items) mustEqual 180
+    }
+
     "Charge 6 apples at 360p" in {
       val items: List[String] = List.fill(6)("Apple")
       Checkout.addUpItems(items) mustEqual 360
@@ -34,8 +39,13 @@ class CheckoutSpec extends mutable.Specification {
     }
 
     "Charge 2 oranges at 50p" in {
-      val items: List[String] = List("Orange")
-      Checkout.addUpItems(items) mustEqual 25
+      val items: List[String] = List("Orange", "Orange")
+      Checkout.addUpItems(items) mustEqual 50
+    }
+
+    "Charge 3 oranges at 75p" in {
+      val items: List[String] = List("Orange", "Orange", "Orange")
+      Checkout.addUpItems(items) mustEqual 75
     }
 
     "Charge 6 oranges at 150p" in {
@@ -48,7 +58,14 @@ class CheckoutSpec extends mutable.Specification {
       Checkout.addUpItems(items) mustEqual 85
     }
 
-    "Charge 4 apple and 14 orange at 85p" in {
+    "Charge 3 apples and 3 oranges at 255p" in {
+      val apples: List[String] = List.fill(3)("Apple")
+      val oranges: List[String] = List.fill(3)("Orange")
+      val items: List[String] = apples ++ oranges
+      Checkout.addUpItems(items) mustEqual 255
+    }
+
+    "Charge 4 apple and 14 orange at 590p" in {
       val apples: List[String] = List.fill(4)("Apple")
       val oranges: List[String] = List.fill(14)("Orange")
       val items: List[String] = apples ++ oranges
