@@ -5,12 +5,26 @@ package net.hmrc.scalatest
   */
 object Checkout extends App {
 
-  def checkout(items: List[String]): Int = {
-    val itemPrices: List[Int] = items.map{ item =>
-      60
-    }
+  def checkout(items: List[String]): String = {
+    val total: Int = addUpItems(items)
+    convertToPounds(total)
+  }
 
-    itemPrices.sum
+  def addUpItems(items: List[String]): Int = {
+
+    items match {
+      case "Apple" :: remainingItems =>
+        60 + addUpItems(remainingItems)
+      case "Orange" :: remainingItems =>
+        25 + addUpItems(remainingItems)
+      case Nil =>
+        0
+    }
+  }
+
+  def convertToPounds(pence: Int): String = {
+    val pounds: Double = pence.toDouble / 100
+    f"£$pounds%1.2f"
   }
 
 }
